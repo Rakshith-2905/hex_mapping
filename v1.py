@@ -15,7 +15,7 @@ green = (90,230,40)
 
 n_of_rings = 3
 map = {}
-l = 5
+l = 1
 latest_nodes_hex = []
 latest_nodes_cat = []
 new_nodes_hex = []
@@ -40,7 +40,8 @@ def update_map(cart_cords, hex_codrs, prev_hex, prev_cart):
 
     new_nodes_cat, new_nodes_hex = [], []
     for i in range(len(cart_cords)):
-
+        if hex_codrs[i] in map:
+            continue 
         new_nodes_cat.append(cart_cords[i])
         map[hex_codrs[i]] =  {'fly':False, 'cart':(cart_cords[i]),'ring':0}
         new_nodes_hex.append(hex_codrs[i])
@@ -85,11 +86,10 @@ def draw_map(n):
     latest_nodes_cat.append(center_of_map)
     latest_nodes_hex.append((0,0))
 
-    for i in range(8):
+    for i in range(100):
         next_hex, next_cart = [], []
         c = 0
         while c < len(latest_nodes_cat):
-            #print center
             temp_hex, temp_cart = Compute_neighbors(latest_nodes_cat[c], latest_nodes_hex[c], latest_nodes_hex, latest_nodes_cat)
             next_hex.extend(temp_hex)
             next_cart.extend(temp_cart)
