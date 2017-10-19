@@ -20,15 +20,6 @@ latest_nodes_hex = []
 latest_nodes_cat = []
 new_nodes_hex = []
 new_nodes_cat = []
-#map = (Q,R) : {'fly':False,'cart':(window_size[0]/2,window_size[1]/2),'ring':0}
-'''
- N = (Qc,Rc-1)
- S = (Qc,Rc+1)
- NW = (Qc-1,Rc)
- SW = (Qc-1,Rc+1)
- NE = (Qc+1,Rc-1)
- SE = (Qc+1,Rc)
-'''
 
 def draw_hexagon(ring):
 
@@ -61,13 +52,12 @@ def update_map(ring,parent):
 
     for r,cord in co_ordinates:
 
-        if r not in map.values():
+        if r not in latest_nodes_cat:
             new_nodes_cat.append(r)
-            
-        if cord not in map:
+
+        if cord not in latest_nodes_hex:
             map[cord] =  {'fly':False,'cart':(r),'ring':0}
             new_nodes_hex.append(cord)
-    #print (len(new_nodes_hex),len(new_nodes_cat))
 
 def Compute_neighbors(center_of_ring):
 
@@ -90,7 +80,6 @@ def Compute_neighbors(center_of_ring):
     update_map(ring,latest_nodes_hex)
 
     latest_nodes_cat = new_nodes_cat
-    #print latest_nodes_cat
 
     latest_nodes_hex = new_nodes_hex
     new_nodes_cat = []
