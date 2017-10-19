@@ -35,9 +35,9 @@ def draw_hexagon(ring):
             pygame.draw.polygon(window, (purple),vertices)
             pygame.draw.lines(window, pygame.Color("black"), 1, vertices, 1)
 
-def update_map(ring,parent):
+def update_map(cart_cords,center_hex):
 
-    Qc,Rc = parent[0][0],parent[0][1]
+    Qc,Rc = center_hex[0][0],center_hex[0][1]
 
     N = (Qc,Rc-1)
     S = (Qc,Rc+1)
@@ -48,16 +48,16 @@ def update_map(ring,parent):
 
     hex_codrs = [N,S,NW,SW,NE,SE]
 
-    co_ordinates = (ring,hex_codrs)
+    co_ordinates = (cart_cords,hex_codrs)
 
-    for r,cord in co_ordinates:
+    for i in range(len(cart_cords)):
 
-        if r not in latest_nodes_cat:
-            new_nodes_cat.append(r)
+        if cart_cords[i] not in latest_nodes_cat:
+            new_nodes_cat.append(cart_cords[i])
 
-        if cord not in latest_nodes_hex:
-            map[cord] =  {'fly':False,'cart':(r),'ring':0}
-            new_nodes_hex.append(cord)
+        if hex_codrs[i] not in latest_nodes_hex:
+            map[hex_codrs[i]] =  {'fly':False,' ':(cart_cords[i]),'ring':0}
+            new_nodes_hex.append(hex_codrs[i])
 
 def Compute_neighbors(center_of_ring):
 
@@ -73,14 +73,14 @@ def Compute_neighbors(center_of_ring):
     NE = [center_of_ring[0]+3*l/2,center_of_ring[1]-((math.sqrt(3))/2)*l]
     SE = [center_of_ring[0]+3*l/2,center_of_ring[1]+((math.sqrt(3))/2)*l]
 
-    ring = [N,S,NW,SW,NE,SE]
+    ring_cart = [N,S,NW,SW,NE,SE]
 
-    draw_hexagon(ring)
+    draw_hexagon(ring_cart)
 
-    update_map(ring,latest_nodes_hex)
+    update_map(ring_cart,latest_nodes_hex)
 
-    latest_nodes_cat = new_nodes_cat
-
+    latest_nodes_cat = new_nodes_cat[:]
+    print(len(latest_nodes_cat))
     latest_nodes_hex = new_nodes_hex
     new_nodes_cat = []
     new_nodes_hex = []
@@ -91,11 +91,12 @@ def Compute_neighbors(center_of_ring):
 def draw_map(n):
 
     center_of_map = (window_size[0]/2,window_size[1]/2)
-    print center_of_map
+
     map[(0,0)] = {'fly':False,'cart':center_of_map,'ring':0}
     latest_nodes_cat.append(center_of_map)
     latest_nodes_hex.append((0,0))
-    for i in range(1):
+
+    for i in range(4):
 
         for center in (latest_nodes_cat):
             #print center
