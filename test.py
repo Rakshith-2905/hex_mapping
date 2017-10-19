@@ -91,7 +91,7 @@ def Compute_neighbors(center_of_ring):
 def draw_map(n):
 
     center_of_map = (window_size[0]/2,window_size[1]/2)
-    print center_of_map
+    print(center_of_map)
     map[(0,0)] = {'fly':False,'cart':center_of_map,'ring':0}
     latest_nodes_cat.append(center_of_map)
     latest_nodes_hex.append((0,0))
